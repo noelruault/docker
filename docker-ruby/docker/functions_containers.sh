@@ -13,39 +13,13 @@ function startContainer_mariadb() {
 }
 
 function startContainer_newton() {
+    app_name="newton"
+    container_path="/mnt/$app_name"
     echo "[INFO] Starting Newton ..."
-    docker run -itd -v $(pwd):/mnt --net=net_control -p 3000:3000 --name newton qvantel/masmovil-base
-    docker container exec -it newton sh -c "cd /mnt/newton && gem install bundler"
-    docker container exec -it newton sh -c "cd /mnt/newton bundle install"
-    docker container exec -it newton sh -c "cd /mnt/newton && bundle check || bundle install"
-    docker container exec -it newton sh -c "service mysql start"
-    docker container exec -it newton sh -c "sh /mnt/docker/scripts/create_db.sh"
-    docker container exec -it newton sh -c "cd /mnt/newton && bundle exec rake db:create && bundle exec rake db:permissions:recreate && bundle exec rake db:permissions:create_acgp_fixtures"
-    docker container exec -it newton sh -c "mysql -uxfera -pxfera xfera < /mnt/docker/scripts/db/database_dump.sql"
-    docker container exec -it newton sh -c "cd /mnt/newton && bundle exec rake db:fixtures:load && bundle exec rake db:fixtures:load" #RAILS_ENV=test
-    docker container exec -itd newton sh -c "redis-server"
-    docker container exec -it newton sh -c "cd /mnt/newton && rails server -b 0.0.0.0"
-}
-
-function startContainer_selforder() {
-    echo "[INFO] Starting Selforder ..."
-    docker run -itd -v $(pwd):/mnt --net=net_control -p 3000:3000 --name selforder qvantel/masmovil-base tail -f /dev/null
-    docker container exec -it selforder sh -c "cd /mnt/selforder && bundle check || bundle install"
-    docker container exec -it selforder sh -c "service mysql start"
-    docker container exec -it selforder sh -c "sh /mnt/scripts/create_db.sh"
-    docker container exec -it selforder sh -c "cd /mnt/selforder && bundle exec rake db:create && bundle exec rake db:permissions:recreate && bundle exec rake db:permissions:create_acgp_fixtures"
-    docker container exec -it selforder sh -c "mysql -uxfera -pxfera xfera < /mnt/docker/scripts/db/database_dump.sql"
-    docker container exec -it selforder sh -c "cd /mnt/selforder && bundle exec rake db:fixtures:load && bundle exec rake db:fixtures:load" #RAILS_ENV=test
-    docker container exec -itd selforder sh -c "redis-server"
-    docker container exec -it selforder sh -c "cd /mnt/selforder && rails s -b 0.0.0.0"
-}
-
-function startContainer_node() {
-    echo "[INFO] Starting Node ..."
-    docker run -itd -v $(pwd):/mnt --rm --net=net_control -p 3000:3000 --name node node:8
-    docker container exec -it node sh -c "cd /mnt; npm install"
-    docker container exec -it node sh -c "cd /mnt; npm run build"
-    docker container exec -itd node sh -c "cd /mnt; node /mnt/server.js"
+    # docker run -it -v $(pwd):/mnt--net=net_control -p 6000:3000 --name newton qvantel/masmovil-base /bin/bash
+    docker run -p 6000:3000 --name newton --rm -itd -v $(pwd):/mnt --net=net_control qvantel/masmovil-base bash
+    docker container exec -it newton sh -c "/mnt/docker/scripts/create_db.sh"
+    docker container exec -it newton sh -c "cd $container_path && bundle exec rails server -b 0.0.0.0"
 }
 
 ######################################

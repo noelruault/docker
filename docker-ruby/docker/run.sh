@@ -1,14 +1,15 @@
 #!/bin/bash
-
-# This is the main entry point for the docker script. In this file are defined
+# This is the main entry point for the DBSS docker script. In this file are defined
 # common funtions and the main __init__() entry point.
 # This script is used for development pourposes.
 
 function createImages() {
-    echo "[INFO] Creating base image and setting up networks..."
-    docker pull mariadb
-    docker pull ruby:2.3.1
+    echo "[INFO] Creating images..."
+    # docker pull mariadb
+    # docker pull node:8
+
     docker build . -t qvantel/masmovil-base
+    createNetworks
 }
 
 function createNetworks() {
@@ -22,7 +23,7 @@ function getActiveContainers() {
 }
 
 function showUsage() {
-    echo "This utility is to easely manage docker containers for development."
+    echo "This utility is to easely manage BSSD docker containers for development."
     echo "To properly use it you first need to have all necessary docker images; to get them all just execute <run.sh create>."
     echo "Finally in order to get up&running any other container for development porpouses you must execute <run.sh start [container-name]>. With an empty container name you will get a list of valid containers names."
     echo ""
@@ -37,8 +38,6 @@ function __init__(){
     case "$1" in
     create)
         createImages
-        createNetworks
-        startContainer_mariadb
         ;;
     start)
         shift

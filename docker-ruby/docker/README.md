@@ -30,21 +30,21 @@ check and rerun this file if needed.
 How to build MM app dockerized beta
 ```sh
 docker build -t qvantel/masmovil-base .
-docker run -itd -v $(pwd):/mnt -p 3000:3000 --name yoigocontainer0 -it qvantel/masmovil-base /bin/bash
+docker run -itd -v $(pwd):/mnt -p 3000:3000 --name container0 -it qvantel/masmovil-base /bin/bash
 ```
 
 After that you will be able to start any app that you want.
 If you want to start multiple applications, you can do it initializing multiple
 containers and exposing different ports. Like this:
 ```sh
-docker run -itd -v $(pwd):/mnt -p 4000:3000 --name yoigocontainer1 -it qvantel/masmovil-base /bin/bash
+docker run -itd -v $(pwd):/mnt -p 4000:3000 --name container1 -it qvantel/masmovil-base /bin/bash
 ```
 
 > After that, you can start for example newton.
 > `cd /mnt/newton && bundle exec rails server -b 0.0.0.0`
 
 ```sh
-docker run -itd -v $(pwd):/mnt -p 5000:3000 --name yoigocontainer2 -it qvantel/masmovil-base /bin/bash
+docker run -itd -v $(pwd):/mnt -p 5000:3000 --name container2 -it qvantel/masmovil-base /bin/bash
 ```
 
 > `cd /mnt/selforder && bundle exec rails server -b 0.0.0.0`

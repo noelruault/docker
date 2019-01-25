@@ -53,15 +53,8 @@ _A container image is a lightweight, stand-alone, executable package of a piece 
 - Less code to transfer, migrate, upload workloads
 
 
-![image.png](assets/image.png)
+![docker-comparison.png](assets/docker-comparison.png)
 
-
-```python
-%%html
-<style>
-table td, table th, table tr {text-align:center !important;}
-</style>
-```
 
 <table>
     <tbody>

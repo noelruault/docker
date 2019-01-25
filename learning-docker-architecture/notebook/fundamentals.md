@@ -1,6 +1,7 @@
 
 # Docker Crash Course
 
+
 #### Virtual Machine?
 A virtual machine (VM) is an emulation of a computer system. A virtual version of a real machine.
 It makes it possible to run what appear to be many separate computers on hardware that is actually one computer. Meaning, you can run many virtual machines on one larger server. What enables the VMs to work is a piece of software called a _hypervisor_.
@@ -13,6 +14,7 @@ A virtual machine can create requests to the _hypervisor_ through a variety of m
 
 VMs can run their own programs and will appear to be using the host’s hardware. However, it’s actually the Hypervisor that’s allocating resources to the _VM_.
 
+
 ### Features of VMs
 
 **Benefits of VMs**
@@ -23,8 +25,10 @@ VMs can run their own programs and will appear to be using the host’s hardware
 
 VMs, however, can take up a lot of system resources. Each VM runs not just a full copy of an operating system, but a virtual copy of all the hardware that the operating system needs to run. This quickly adds up to a lot of RAM and CPU cycles. That’s still economical compared to running separate actual computers, but for some applications it can be overkill, which led to the development of containers.
 
-[vm-layers.png](assets/vm-layers.png)
-<img src="assets/vm-layers.png" width="500">
+<p align="center">
+    <img src="assets/vm-layers.png" width="500">
+</p>
+
 
 #### Containers?
 
@@ -32,8 +36,9 @@ With containers, instead of virtualizing the underlying computer like a virtual 
 
 Containers sit on top of a physical server and its host OS — typically Linux or Windows. Each container shares the host OS kernel and, usually, the binaries and libraries, too.
 
-[docker-layers.png](assets/docker-layers.png)
-<img src="assets/docker-layers.png" width="500">
+<p align="center">
+    <img src="assets/docker-layers.png" width="500" align="center">
+</p>
 
 Containers are thus exceptionally light — they are only megabytes in size and take just seconds to start.
 
@@ -92,6 +97,7 @@ If your organization is running a large number of instances of the same operatin
 
 ![docker-components.png](assets/docker-components.png)
 
+
 ### Docker: Containers vs Images
 
 Docker objects
@@ -122,8 +128,6 @@ By default, a container is relatively well isolated from other containers and it
 A container is defined by its image as well as any configuration options you provide to it when you create or start it. When a container is removed, any changes to its state that are not stored in persistent storage disappear.
 
 
-
-
 ```python
 !docker container ls
 ```
@@ -132,16 +136,16 @@ A container is defined by its image as well as any configuration options you pro
     c2d6868d53c4        ubuntu              "bash"              3 hours ago         Up 3 hours                              brave_margulis
 
 
+## Docker Network
 
-#### Docker Network
-
-## BRIDGE
+### BRIDGE
 Docker creates a network interface to connect the container to a default network, since you did not specify any networking options, the container will connect to a bridge network. This includes assigning an IP address to the container. ~~By default, containers can connect to external networks using the host machine’s network connection.~~
 
 ![docker-networking.png](assets/docker-networking.png)
 *Endpoint: An endpoint is a remote computing device that communicates back and forth with a network to which is it connected.*
 
-## HOST
+
+### HOST
 Using host network, that container’s network stack will not be isolated from the Docker host. For example, if a service container binds to port 80, only one service container can run on a given swarm node (also in the host machine).
 So in case you connect your container with a host network, it will not be isolated like in the image.
 
@@ -158,7 +162,9 @@ So in case you connect your container with a host network, it will not be isolat
 
 ![docker-architecture.png](assets/docker-architecture.png)
 
+
 ## Technical example
+
 Source:
     - https://docs.docker.com/engine/docker-overview/
     - https://docs.docker.com/get-started/part2/
@@ -175,6 +181,7 @@ Source:
 # and runs /bin/bash
 !docker run -i -t ubuntu /bin/bash
 ```
+
 
 #### Dockerfile
 
